@@ -1,15 +1,16 @@
+package com.example.composefirestore
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardOptions
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.composefirestore.ui.theme.ComposeFirestoreTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,15 +19,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ComposeFirestoreTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding)
-                            .padding(16.dp)
-                    ) {
-                        LoginScreen()
-                    }
+                Scaffold( modifier = Modifier.fillMaxSize() ) { innerPadding ->
+                    Greeting(
+                        name = "Android",
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
         }
@@ -34,59 +31,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun LoginScreen() {
-    var name by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var showMessage by remember { mutableStateOf(false) }
-
-    Column(modifier = Modifier.fillMaxWidth()) {
-        TextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Name") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp),
-            singleLine = true,
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = androidx.compose.ui.text.input.ImeAction.Next
-            )
-        )
-
-        TextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = androidx.compose.ui.text.input.ImeAction.Done
-            ),
-            singleLine = true,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        )
-
-        Button(
-            onClick = { showMessage = true },
-            modifier = Modifier.padding(top = 8.dp)
-        ) {
-            Text("Submit")
-        }
-
-        if (showMessage) {
-            Text(
-                text = "Name: $name, Password: $password",
-                modifier = Modifier.padding(top = 8.dp)
-            )
-        }
-    }
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "Hello $name!",
+        modifier = modifier
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewLoginScreen() {
+fun GreetingPreview() {
     ComposeFirestoreTheme {
-        LoginScreen()
+        Greeting("Android")
     }
 }
